@@ -20,7 +20,6 @@ if __name__ == '__main__':
 
     # Collect crypto Data
     crypto = Coinbase()
-    crypto.update()
 
     while True:
         time.sleep(300)

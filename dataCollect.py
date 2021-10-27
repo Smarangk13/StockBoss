@@ -26,8 +26,8 @@ class Alpaca:
     # We show Friday data (maybe this can be done from the front end? We get a few days' worth
     # of data here
     def get_granular_today_data(self, symbol, timeframe='minute'):
-        history_url = "{}/v1/bars/{}?symbols={}&limit={}&start={}".format(self.DATA_URL, timeframe, symbol
-                                                                          , '600', self.TODAY)
+        history_url = "{}/v1/bars/{}?symbols={}&limit={}&start={}".format(self.DATA_URL, timeframe, symbol,
+                                                                          '600', self.TODAY)
         r = requests.get(history_url, headers=self.HEADERS)
         json_data = r.json()
 
