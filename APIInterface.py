@@ -125,6 +125,8 @@ class Coinbase:
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             print(e)
 
+
 if __name__ == '__main__':
     Coins = Coinbase()
     Coins.update()
+    print(Coins.results)
