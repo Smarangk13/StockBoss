@@ -1,32 +1,41 @@
 import requests
 import random
 import apiConfig
+import time
 from datetime import timedelta, datetime
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
+
 class Alpaca:
     def __init__(self):
-        self.DATA_URL = apiConfig.ALPACA_DATA_ENDPOINT
+        # self.ALPACA_ENDPOINT = "https://paper-api.alpaca.markets"
+        self.ALPACA_DATA_ENDPOINT = "https://data.alpaca.markets"
         self.HEADERS = {'APCA-API-KEY-ID': apiConfig.ALPACA_KEY,
                         'APCA-API-SECRET-KEY': apiConfig.ALPACA_SECRET_KEY}
         self.TODAY = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
-        self.THREEHOURSAGO = datetime.now() - timedelta(hours=3)
 
-    def get_history(self, symbol, timeframe='day'):
-        history_url = "{}/v1/bars/{}?symbols=".format(self.DATA_URL, timeframe)
+    def get_daily_history(self, symbol, start='2015-1-1T07:20:50.52Z', end='2021-1-1T07:20:50.52Z', page = None):
+        ticker = symbol
+        baseUrl = self.ALPACA_DATA_ENDPOINT
+        data_url = "{}/v2/stocks/{}/bars".format(baseUrl, ticker)
+        # data_url = "https://data.alpaca.markets/v2/stocks/MSFT/bars"
+        params = {'start':start,
+                  'end': end,
+                  'timeframe': '1Day'}
 
-        data_url = history_url + symbol
-        r = requests.get(data_url, headers=self.HEADERS)
-        json_data = r.json()
+        if page is not None:
+            params['page_token'] = page
 
-        return json_data
+        r = requests.get(data_url, headers=self.HEADERS, params=params)
+        json_hist_data = r.json()
+        return json_hist_data
 
     # Gets granular data for today, might need to build more logic so that if it's a weekend,
     # We show Friday data (maybe this can be done from the front end? We get a few days' worth
     # of data here
     def get_granular_today_data(self, symbol, timeframe='minute'):
-        history_url = "{}/v1/bars/{}?symbols={}&limit={}&start={}".format(self.DATA_URL, timeframe, symbol,
+        history_url = "{}/v1/bars/{}?symbols={}&limit={}&start={}".format(self.ALPACA_DATA_ENDPOINT, timeframe, symbol,
                                                                           '600', self.TODAY)
         r = requests.get(history_url, headers=self.HEADERS)
         json_data = r.json()
