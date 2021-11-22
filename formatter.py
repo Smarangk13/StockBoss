@@ -37,6 +37,13 @@ class DatesFormat:
         res = year + '-' + mm + '-' + dd + 'T' + time+'Z'
         return res
 
+    @staticmethod
+    def easyRFC(dd,mm,yy):
+        time = 'T12:00:00Z'
+
+        res = yy + '-' + mm + '-' + dd + time
+        return res
+
     # date format "mm dd yyyy"
     @staticmethod
     def get_day(date):
@@ -50,8 +57,8 @@ class DatesFormat:
     @staticmethod
     def rfc_list(date):
         tx = date[:date.find('T')]
-        yyyy,mm,dd = tx.split('-')
-        date = dd + ' ' + mm + ' ' + yyyy
+        yyyy,mm,dd = list(map(int,tx.split('-')))
+        date = str(dd) + ' ' + str(mm) + ' ' + str(yyyy)
         day_num = DatesFormat.get_day(date)
         return dd,mm,yyyy,day_num
 

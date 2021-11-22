@@ -7,10 +7,28 @@ class Colletcor:
     def __init__(self):
         self.stocks = []
         self.alert_grid = []
-        
+
+    @staticmethod
+    def lastdate(stock):
+        try:
+            fileName = 'stocks/' + stock + '.csv'
+            fr = open(fileName, 'r')
+            content = fr.readlines()
+            last = content[-1]
+            last = last.replace('\'','')
+            data = last.split(',')
+            dd = data[0]
+            mm = data[1]
+            yyyy = data[2]
+            return DatesFormat.easyRFC(dd,mm,yyyy)
+
+        except:
+            return '2011-01-01T12:00:00Z'
+
     def get_history(self, ticker):
         # Collect data from API
-        start = '2011-01-01T12:00:00Z'
+        start = self.lastdate(ticker)
+
         # Add logic here to check how much data already exists
 
         end = datetime.datetime.now()
@@ -18,6 +36,12 @@ class Colletcor:
 
         AlpacaObj = Alpaca()
         res = AlpacaObj.get_daily_history(ticker,start,end)
+        if 'bars' not in res:
+            print('Error with response')
+            print(ticker)
+            print(res)
+            return
+
         bars = res['bars']
 
         # Result might be multiple pages
@@ -28,7 +52,7 @@ class Colletcor:
 
         # Format and ave to csv
         outfile = 'stocks/' + ticker + '.csv'
-        fileWriter = open(outfile, 'w')
+        fileWriter = open(outfile, 'a')
         fileWriter.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
         for daily in bars:
             market_date = daily['t']
