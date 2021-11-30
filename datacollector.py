@@ -20,6 +20,8 @@ class Colletcor:
             dd = data[0]
             mm = data[1]
             yyyy = data[2]
+            # add logic to delete last line (data may be recorded before close
+
             return DatesFormat.easyRFC(dd,mm,yyyy)
 
         except:
@@ -28,8 +30,6 @@ class Colletcor:
     def get_history(self, ticker):
         # Collect data from API
         start = self.lastdate(ticker)
-
-        # Add logic here to check how much data already exists
 
         end = datetime.datetime.now()
         end = DatesFormat.regulartrfc(end)
@@ -103,6 +103,6 @@ class Colletcor:
 
 if __name__ == '__main__':
     Collect = Colletcor()
-    Collect.get_stock_list()
-    Collect.get_history('GOOG')
+    # Collect.get_stock_list()
+    Collect.get_history('DIS')
 
