@@ -1,6 +1,6 @@
 apiConfig.py
 stocks/
-#notebooks/
+notebooks/
 notebooks/.ipynb_checkpoints/
 *.pyc
 *.csv
