@@ -24,8 +24,7 @@ if __name__ == '__main__':
     while True:
         time.sleep(300)
         print('Refreshing')
-        crypto.update()
-        price = crypto.latest_price('BTC')
-        if price < 61000:
-            alert('SELL','HEY BTC IS BELOW 61k')
+        # Update all stocks
+        # Check alerts
+
     # Collect stock data
