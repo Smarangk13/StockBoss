@@ -5,11 +5,11 @@ def avg(nums):
     total = 0
     for n in nums:
         total += n
-    avg = total / len(nums)
-    return avg
+    avgerage = total / len(nums)
+    return avgerage
 
 
-class Stock_Stats:
+class StockStats:
     def __init__(self, stock):
         self.stock = stock  # Pandas DF
         self.stats = {}
@@ -137,5 +137,10 @@ class MarketStats:
     def gen_report(self):
         pass
 
-    def combine(self):
+    # For merging 2 stocks
+    def merge(self, stock1, stock2):
+        pass
+
+    # For merging a list of stocks
+    def combine(self, stocks=None, out_list='Merged.csv'):
         pass

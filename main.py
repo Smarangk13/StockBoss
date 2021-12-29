@@ -1,7 +1,7 @@
 # Main To Run through all stocks of the day and start report best for today
-import time
 from tkinter import messagebox, Tk
-from APIInterface import *
+from Functions.APIInterface import *
+
 
 def alert(title, message, kind='info', hidemain=True):
     if kind not in ('error', 'warning', 'info'):

@@ -2,7 +2,7 @@ import pandas as pd
 import datetime
 
 
-class Labeller:
+class Labeler:
     @staticmethod
     def simple(stock):
         labels = []
