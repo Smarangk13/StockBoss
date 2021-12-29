@@ -7,7 +7,7 @@ class Labeller:
     def simple(stock):
         labels = []
         for i in range(1, 100):
-            last = stock['Close'][i-1]
+            last = stock['Close'][i - 1]
             cur = stock['Close'][i]
             if cur - last > 0:
                 score = 1
@@ -28,17 +28,17 @@ class DatesFormat:
     # Eg = datetime.datetime(2021, 11, 17, 16, 54, 57, 194018)
     # Rfc = '2015-1-1T07:20:50.52Z'
     @staticmethod
-    def regulartrfc(date:datetime.datetime):
+    def regulartrfc(date: datetime.datetime):
         dd = str(date.day)
         mm = str(date.month)
         year = str(date.year)
-        time = str(date.hour) + ":"+str(date.minute) + ":" + str(date.second)
+        time = str(date.hour) + ":" + str(date.minute) + ":" + str(date.second)
 
-        res = year + '-' + mm + '-' + dd + 'T' + time+'Z'
+        res = year + '-' + mm + '-' + dd + 'T' + time + 'Z'
         return res
 
     @staticmethod
-    def easyRFC(dd,mm,yy):
+    def easyRFC(dd, mm, yy):
         time = 'T12:00:00Z'
 
         res = yy + '-' + mm + '-' + dd + time
@@ -57,12 +57,13 @@ class DatesFormat:
     @staticmethod
     def rfc_list(date):
         tx = date[:date.find('T')]
-        yyyy,mm,dd = list(map(int,tx.split('-')))
+        yyyy, mm, dd = list(map(int, tx.split('-')))
         date = str(dd) + ' ' + str(mm) + ' ' + str(yyyy)
         day_num = DatesFormat.get_day(date)
-        return dd,mm,yyyy,day_num
+        return dd, mm, yyyy, day_num
 
-class cleaners:
+
+class Cleaners:
     def __init__(self):
         pass
 

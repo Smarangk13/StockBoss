@@ -1,15 +1,17 @@
 import pandas as pd
 
+
 def avg(nums):
     total = 0
     for n in nums:
         total += n
-    avg = total/ len(nums)
+    avg = total / len(nums)
     return avg
+
 
 class Stock_Stats:
     def __init__(self, stock):
-        self.stock = stock # Pandas DF
+        self.stock = stock  # Pandas DF
         self.stats = {}
 
     def dailyStats(self):
@@ -75,7 +77,7 @@ class Stock_Stats:
         self.stats["Avg red"] = avg_red
 
     def volatility(self):
-        df= self.stock
+        df = self.stock
 
         change = 0
         total = 0
@@ -86,7 +88,7 @@ class Stock_Stats:
             total += change
             prev = close
 
-        vol = total/len(df)
+        vol = total / len(df)
         self.stats['Volatility'] = vol
 
     def toMonth(self):
@@ -95,7 +97,7 @@ class Stock_Stats:
         month_df = {}
         new_row = {}
         for index, row in df.iterrows():
-            month = row ['month']
+            month = row['month']
             if month != cur_month:
                 month_df[cur_month] = new_row
                 cur_month = month
@@ -117,18 +119,19 @@ class Stock_Stats:
     def toWeek(self):
         pass
 
-    def moving_avg(self, window, frame = 'Day'):
+    def moving_avg(self, window, frame='Day'):
         if frame == 'Week':
             window *= 7
         elif frame == 'Month':
             window *= 30
 
     # Finds time periods for % change
-    def change_find(self, change, tolerance = None):
+    def change_find(self, change, tolerance=None):
         pass
 
     def slope_graph(self):
         pass
+
 
 class MarketStats:
     def gen_report(self):
