@@ -1,8 +1,13 @@
+# Auto Created
 .idea/
-apiConfig.py
-stocks/
-notebooks/
 notebooks/.ipynb_checkpoints/
 *.pyc
+
+# For saving space
 *.csv
+stocks/
+notebooks/
+
+#Files
 test.py
+apiConfig.py
