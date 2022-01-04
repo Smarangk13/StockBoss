@@ -24,15 +24,26 @@ class Labeler:
 
 
 class DatesFormat:
+    @staticmethod
+    def twoDigits(n):
+        n = int(n)
+        if n < 10:
+            res = '0' + str(n)
+        else:
+            res = str(n)
+
+        return res
+
     # Date format like datetime.datetime.now()
     # Eg = datetime.datetime(2021, 11, 17, 16, 54, 57, 194018)
     # Rfc = '2015-1-1T07:20:50.52Z'
     @staticmethod
     def regulartrfc(date: datetime.datetime):
-        dd = str(date.day)
-        mm = str(date.month)
-        year = str(date.year)
-        time = str(date.hour) + ":" + str(date.minute) + ":" + str(date.second)
+        sstr = DatesFormat.twoDigits
+        dd = sstr(date.day)
+        mm = sstr(date.month)
+        year = sstr(date.year)
+        time = sstr(date.hour) + ":" + sstr(date.minute) + ":" + sstr(date.second)
 
         res = year + '-' + mm + '-' + dd + 'T' + time + 'Z'
         return res

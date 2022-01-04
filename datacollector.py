@@ -111,6 +111,6 @@ class Collector:
 
 
 if __name__ == '__main__':
-    Collect = Colletcor()
+    Collect = Collector()
     # Collect.get_stock_list()
     Collect.get_history('MSFT')
