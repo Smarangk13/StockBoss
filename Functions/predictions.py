@@ -18,11 +18,12 @@ def accuracy(test, real):
     print(correct, wrong)
     print('accuracy = ', correct / (correct + wrong) * 100)
 
+
 class Predictor:
-    def sgd(self,stock, split = 60):
+    def sgd(self, stock, split=60):
         test_size = int(len(stock) * 0.6)
         X_train = stock[['Month', 'Open', 'High', 'Low', 'Close', 'Volume']][:test_size]
-        Y_train = stock[['Score']][1:test_size+1]
+        Y_train = stock[['Score']][1:test_size + 1]
 
         X_train = X_train.astype({'Open': float, 'High': float, 'Low': float, 'Close': float, 'Volume': int})
 

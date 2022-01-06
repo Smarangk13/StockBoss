@@ -3,6 +3,7 @@ import datetime
 
 
 class Labeler:
+    # Labels good if close higher than open
     @staticmethod
     def simple(stock):
         labels = []
