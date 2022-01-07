@@ -1,6 +1,9 @@
 # Main To Run through all stocks of the day and start report best for today
+import os
+import pandas as pd
 from tkinter import messagebox, Tk
 from Functions.APIInterface import *
+from datacollector import Collector
 
 
 def alert(title, message, kind='info', hidemain=True):
@@ -21,9 +24,44 @@ if __name__ == '__main__':
     # Collect crypto Data
     crypto = Coinbase()
 
+    stock = None
+
     while True:
-        time.sleep(300)
-        print('Refreshing')
+        print('\nEnter an action')
+        print('1. Select/Change Stock')
+        print('2. Get Stats')
+        print('3. Generate market report')
+        print('4. Run Alerts')
+        choice = int(input('\n'))
+
+        if choice == 1:
+            stock = input('Enter stock ticker:').upper()
+            cwd = os.getcwd()
+            stockdir = cwd + '/stocks'
+            file = stock + '.csv'
+            if file in os.listdir(stockdir):
+                print('Found')
+            else:
+                print('Not found')
+                print('Trying to download')
+                collector = Collector()
+                collector.get_history(stock)
+
+        if choice == 2:
+            if stock is None:
+                print('No file selected')
+                continue
+
+            file = 'stocks/' + stock + '.csv'
+            stockdf = pd.read_csv(file)
+            print(stockdf.head())
+
+        elif choice == 4:
+            time.sleep(300)
+            print('Refreshing')
+
+        elif choice == 0:
+            break
         # Update all stocks
         # Check alerts
 

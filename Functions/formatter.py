@@ -52,7 +52,10 @@ class DatesFormat:
     @staticmethod
     def easyRFC(dd, mm, yy):
         time = 'T12:00:00Z'
-
+        sstr = DatesFormat.twoDigits
+        dd = sstr(dd)
+        mm = sstr(mm)
+        yy = sstr(yy)
         res = yy + '-' + mm + '-' + dd + time
         return res
 

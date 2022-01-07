@@ -46,7 +46,7 @@ class Collector:
             print('Error with response')
             print(ticker)
             print(res)
-            return
+            return res
 
         bars = res['bars']
 
@@ -59,7 +59,10 @@ class Collector:
         # Format and ave to csv
         outfile = 'stocks/' + ticker + '.csv'
         fileWriter = open(outfile, 'a')
-        fileWriter.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
+
+        if ticker + '.csv' not in os.listdir(os.getcwd() + "/stocks"):
+            fileWriter.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
+
         for daily in bars:
             market_date = daily['t']
             dateList = dd, mm, yyyy, day = DatesFormat.rfc_list(market_date)
@@ -70,6 +73,7 @@ class Collector:
             fileWriter.write('\n')
 
         fileWriter.close()
+        return True
 
     def get_all_history(self):
 
@@ -113,4 +117,4 @@ class Collector:
 if __name__ == '__main__':
     Collect = Collector()
     # Collect.get_stock_list()
-    Collect.get_history('MSFT')
+    Collect.get_history('FB')

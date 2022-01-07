@@ -5,8 +5,8 @@ def avg(nums):
     total = 0
     for n in nums:
         total += n
-    avgerage = total / len(nums)
-    return avgerage
+    average = total / len(nums)
+    return average
 
 
 class StockStats:
