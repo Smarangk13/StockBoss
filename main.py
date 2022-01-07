@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from tkinter import messagebox, Tk
 from Functions.APIInterface import *
+from Functions.stats import StockStats, MarketStats
 from datacollector import Collector
 
 
@@ -54,7 +55,11 @@ if __name__ == '__main__':
 
             file = 'stocks/' + stock + '.csv'
             stockdf = pd.read_csv(file)
+            print('Loaded stock-')
             print(stockdf.head())
+            stats = StockStats(stockdf)
+            results = stats.run_all()
+            print(results)
 
         elif choice == 4:
             time.sleep(300)

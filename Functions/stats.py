@@ -14,7 +14,7 @@ class StockStats:
         self.stock = stock  # Pandas DF
         self.stats = {}
 
-    def dailyStats(self):
+    def green_red_counter(self):
         df = self.stock
         red_days = 0
         green_days = 0
@@ -49,6 +49,9 @@ class StockStats:
         greens = []
         reds = []
 
+        # Skip first row because already using prev
+        df = df[1:]
+
         for index, day in df.iterrows():
             close = day['Close']
 
@@ -76,20 +79,52 @@ class StockStats:
         self.stats["Avg green"] = avg_green
         self.stats["Avg red"] = avg_red
 
+    # 4 types-
+    # 1. Daily volatility (Open-Close)
+    # 2. Daily movement (High - Low)
+    # 3. day-day volatility(Close - Close),
+    # 4. Pre Market (Close-Open)
     def volatility(self):
         df = self.stock
 
-        change = 0
-        total = 0
+        total1 = 0
+        total2 = 0
+        total3 = 0
+        total4 = 0
+
         prev = float(df[0:1]['Close'])
         for index, day in df.iterrows():
+            open = day['Open']
             close = day['Close']
-            change = abs(close - prev)
-            total += change
+            high = day['High']
+            low = day['Low']
+
+            change1 = abs(close - open)
+            change2 = abs(high - low)
+            # For first row skip pre market and day-day
+            if index != 0:
+                change3 = abs(close - prev)
+                change4 = abs(prev - open)
+            else:
+                change3 = 0
+                change4 = 0
+
+            total1 += change1
+            total2 += change2
+            total3 += change3
+            total4 += change4
             prev = close
 
-        vol = total / len(df)
-        self.stats['Volatility'] = vol
+        days = len(df)
+        vol1 = total1 / days
+        vol2 = total2 / days
+        vol3 = total3 / (days - 1)
+        vol4 = total4 / (days - 1)
+
+        self.stats['Daily Volatility'] = vol1
+        self.stats['Daily Volatility Movement(high-low)'] = vol2
+        self.stats['Day-Day Volatility'] = vol3
+        self.stats['Pre Market Volatility'] = vol4
 
     def toMonth(self):
         df = self.stock
@@ -132,6 +167,11 @@ class StockStats:
     def slope_graph(self):
         pass
 
+    def run_all(self):
+        self.green_red_counter()
+        self.streaks()
+        self.volatility()
+        return self.stats
 
 class MarketStats:
     def gen_report(self):
