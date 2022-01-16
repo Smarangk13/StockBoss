@@ -58,10 +58,13 @@ class Collector:
 
         # Format and ave to csv
         outfile = 'stocks/' + ticker + '.csv'
-        fileWriter = open(outfile, 'a')
 
         if ticker + '.csv' not in os.listdir(os.getcwd() + "/stocks"):
+            fileWriter = open(outfile, 'a')
             fileWriter.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
+
+        else:
+            fileWriter = open(outfile, 'w')
 
         for daily in bars:
             market_date = daily['t']
