@@ -28,11 +28,16 @@ if __name__ == '__main__':
     stock = None
 
     while True:
+        if stock is None:
+            print('No Stock selected')
+        else:
+            print('Stock Selected', stock)
+
         print('\nEnter an action')
         print('1. Select/Change Stock')
         print('2. Get Stats')
-        print('3. Generate market report')
-        print('4. Run Alerts')
+        print('4. Generate market report')
+        print('5. Run Alerts')
         choice = int(input('\n'))
 
         if choice == 1:
@@ -43,12 +48,12 @@ if __name__ == '__main__':
             if file in os.listdir(stockdir):
                 print('Found')
             else:
-                print('Not found')
+                print('Not in directory')
                 print('Trying to download')
                 collector = Collector()
                 collector.get_history(stock)
 
-        if choice == 2:
+        elif choice == 2:
             if stock is None:
                 print('No file selected')
                 continue
@@ -61,12 +66,18 @@ if __name__ == '__main__':
             results = stats.run_all()
             print(results)
 
+        elif choice == 3:
+            print('Updating Stock')
+
         elif choice == 4:
             time.sleep(300)
             print('Refreshing')
 
         elif choice == 0:
             break
+
+        else:
+            print('Incorrect Option')
         # Update all stocks
         # Check alerts
 
