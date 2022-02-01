@@ -94,17 +94,17 @@ class StockStats:
 
         prev = float(df[0:1]['Close'])
         for index, day in df.iterrows():
-            open = day['Open']
+            o = day['Open']
             close = day['Close']
             high = day['High']
             low = day['Low']
 
-            change1 = abs(close - open)
+            change1 = abs(close - o)
             change2 = abs(high - low)
             # For first row skip pre market and day-day
             if index != 0:
                 change3 = abs(close - prev)
-                change4 = abs(prev - open)
+                change4 = abs(prev - o)
             else:
                 change3 = 0
                 change4 = 0
@@ -172,6 +172,7 @@ class StockStats:
         self.streaks()
         self.volatility()
         return self.stats
+
 
 class MarketStats:
     def gen_report(self):

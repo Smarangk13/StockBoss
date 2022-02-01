@@ -17,8 +17,8 @@ class Collector:
     @staticmethod
     def last_date(stock):
         try:
-            fileName = 'stocks/' + stock + '.csv'
-            fr = open(fileName, 'r')
+            file_name = 'stocks/' + stock + '.csv'
+            fr = open(file_name, 'r')
             content = fr.readlines()
             last = content[-1]
             last = last.replace('\'', '')
@@ -30,7 +30,7 @@ class Collector:
 
             return DatesFormat.easyRFC(dd, mm, yyyy)
 
-        except:
+        except FileNotFoundError:
             return '2011-01-01T12:00:00Z'
 
     def get_history(self, ticker):
@@ -40,8 +40,8 @@ class Collector:
         end = datetime.datetime.now()
         end = DatesFormat.regulartrfc(end)
 
-        AlpacaObj = Alpaca()
-        res = AlpacaObj.get_daily_history(ticker, start, end)
+        alpaca = Alpaca()
+        res = alpaca.get_daily_history(ticker, start, end)
         if 'bars' not in res:
             print('Error with response')
             print(ticker)
@@ -53,29 +53,29 @@ class Collector:
         # Result might be multiple pages
         while 'next_page_token' in res and res['next_page_token'] is not None:
             next_page = res['next_page_token']
-            res = AlpacaObj.get_daily_history(ticker, start, end, next_page)
+            res = alpaca.get_daily_history(ticker, start, end, next_page)
             bars += res['bars']
 
         # Format and ave to csv
         outfile = 'stocks/' + ticker + '.csv'
 
         if ticker + '.csv' not in os.listdir(os.getcwd() + "/stocks"):
-            fileWriter = open(outfile, 'a')
-            fileWriter.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
+            file_writer = open(outfile, 'a')
+            file_writer.write('Date,Month,Year,Day,Open,High,Low,Close,Vol\n')
 
         else:
-            fileWriter = open(outfile, 'w')
+            file_writer = open(outfile, 'w')
 
         for daily in bars:
             market_date = daily['t']
-            dateList = dd, mm, yyyy, day = DatesFormat.rfc_list(market_date)
-            fileWriter.write(str(dateList)[1:-1].replace(' ', ''))
-            fileWriter.write(',')
+            date_list = dd, mm, yyyy, day = DatesFormat.rfc_list(market_date)
+            file_writer.write(str(date_list)[1:-1].replace(' ', ''))
+            file_writer.write(',')
             ohlcv = list(daily.values())[1:6]
-            fileWriter.write(str(ohlcv)[1:-1].replace(' ', ''))
-            fileWriter.write('\n')
+            file_writer.write(str(ohlcv)[1:-1].replace(' ', ''))
+            file_writer.write('\n')
 
-        fileWriter.close()
+        file_writer.close()
         return True
 
     def get_all_history(self):

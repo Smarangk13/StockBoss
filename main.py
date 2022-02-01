@@ -43,9 +43,9 @@ if __name__ == '__main__':
         if choice == 1:
             stock = input('Enter stock ticker:').upper()
             cwd = os.getcwd()
-            stockdir = cwd + '/stocks'
+            stock_dir = cwd + '/stocks'
             file = stock + '.csv'
-            if file in os.listdir(stockdir):
+            if file in os.listdir(stock_dir):
                 print('Found')
             else:
                 print('Not in directory')
@@ -59,10 +59,10 @@ if __name__ == '__main__':
                 continue
 
             file = 'stocks/' + stock + '.csv'
-            stockdf = pd.read_csv(file)
+            stock_df = pd.read_csv(file)
             print('Loaded stock-')
-            print(stockdf.head())
-            stats = StockStats(stockdf)
+            print(stock_df.head())
+            stats = StockStats(stock_df)
             results = stats.run_all()
             print(results)
 

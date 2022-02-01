@@ -1,8 +1,7 @@
 import requests
 import random
 import apiConfig
-import time
-from datetime import timedelta, datetime
+from datetime import datetime
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
@@ -15,12 +14,12 @@ class Alpaca:
                         'APCA-API-SECRET-KEY': apiConfig.ALPACA_SECRET_KEY}
         self.TODAY = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
 
-    def get_daily_history(self, symbol, start='2015-1-1T07:20:50.52Z', end='2021-1-1T07:20:50.52Z', page = None):
+    def get_daily_history(self, symbol, start='2015-1-1T07:20:50.52Z', end='2021-1-1T07:20:50.52Z', page=None):
         ticker = symbol
-        baseUrl = self.ALPACA_DATA_ENDPOINT
-        data_url = "{}/v2/stocks/{}/bars".format(baseUrl, ticker)
+        base_url = self.ALPACA_DATA_ENDPOINT
+        data_url = "{}/v2/stocks/{}/bars".format(base_url, ticker)
         # data_url = "https://data.alpaca.markets/v2/stocks/MSFT/bars"
-        params = {'start':start,
+        params = {'start': start,
                   'end': end,
                   'timeframe': '1Day'}
 
