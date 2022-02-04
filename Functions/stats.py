@@ -79,6 +79,9 @@ class StockStats:
         self.stats["Avg green"] = avg_green
         self.stats["Avg red"] = avg_red
 
+    def last_streak(self):
+        pass
+
     # 4 types-
     # 1. Daily volatility (Open-Close)
     # 2. Daily movement (High - Low)
@@ -159,11 +162,13 @@ class StockStats:
             window *= 7
         elif frame == 'Month':
             window *= 30
+        pass
 
     # Finds time periods for % change
     def change_find(self, change, tolerance=None):
         pass
 
+    # Returns week/ month slope
     def slope_graph(self):
         pass
 
